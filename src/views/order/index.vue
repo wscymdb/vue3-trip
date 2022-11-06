@@ -1,0 +1,7 @@
+<template>
+  <div class="oredr">order.vue</div>
+</template>
+
+<script setup></script>
+
+<style scoped lang="less"></style>
