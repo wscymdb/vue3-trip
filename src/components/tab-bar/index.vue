@@ -3,7 +3,7 @@
     <div
       class="tab-bar_item"
       v-for="(item, i) in tabBarInfo"
-      @click="tabBarChange(i)"
+      @click="tabBarChange(i, item.path)"
     >
       <i
         class="iconfont"
@@ -16,44 +16,31 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup name="tabbar">
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { tabBarInfo, tabBarRouterMap } from '@/assets/data/tabbar'
 
 const router = useRouter()
 
-const tabBarInfo = [
-  {
-    name: '首页',
-    icon: 'icon-shouye',
-  },
-  {
-    name: '收藏',
-    icon: 'icon-xihuan',
-  },
-  {
-    name: '订单',
-    icon: 'icon-dingdan',
-  },
-  {
-    name: '消息',
-    icon: 'icon-31xiaoxi',
-  },
-]
-
 const currentIndex = ref(0)
-
-const tabBarRouterMap = new Map([
-  [0, '/home'],
-  [1, '/favor'],
-  [2, '/order'],
-  [3, '/message'],
-])
 
 const tabBarChange = (index) => {
   currentIndex.value = index
-  router.push(tabBarRouterMap.get(index))
 }
+
+console.log(import.meta.url)
+
+// 监听变化 跳转路由
+watch(
+  currentIndex,
+  (curr) => {
+    router.push(tabBarRouterMap.get(curr))
+  },
+  {
+    immediate: true,
+  }
+)
 </script>
 
 <style scoped lang="less">
@@ -64,6 +51,8 @@ const tabBarChange = (index) => {
   left: 0;
   right: 0;
   bottom: 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
   height: 55px;
 
   &_item {
@@ -73,14 +62,14 @@ const tabBarChange = (index) => {
     align-items: center;
     font-size: 16px;
     padding-top: 2px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #f2f2f2;
 
     i {
       font-size: 20px;
     }
 
     .active {
-      color: rgb(233, 101, 57);
+      color: var(--primary-color);
       transform: scale(1.1);
       transition: all 0.1s linear;
     }

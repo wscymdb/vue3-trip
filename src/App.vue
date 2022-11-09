@@ -1,10 +1,20 @@
 <script setup>
 import TabBar from '@/components/tab-bar/index.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 </script>
 
 <template>
-  <routerView></routerView>
-  <TabBar />
+  <div class="container">
+    <routerView></routerView>
+    <TabBar v-if="!route.meta.hiddenTabbar" />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+</style>
