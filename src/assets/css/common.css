@@ -8,3 +8,11 @@
 html {
 font-size: 14px;
 }
+
+.p10 {
+  padding: 10px;
+}
+
+.bottom-gray-line {
+  border-bottom: 1px solid #f8f8f8;
+}

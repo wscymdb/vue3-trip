@@ -2,7 +2,7 @@
   <div class="container">
     <van-overlay :show="cityStore.showOverlay">
       <div class="wrapper">
-        <van-loading color="#0094ff">拼命加载中</van-loading>
+        <img class="loding" src="@/assets/images/loding.gif" alt="" />
       </div>
     </van-overlay>
     <div class="top">
@@ -78,10 +78,9 @@ const { allCities } = toRefs(cityStore)
     height: 100%;
   }
 
-  .block {
-    width: 120px;
-    height: 120px;
-    background-color: #fff;
+  .loding {
+    width: 60px;
+    height: 60px;
   }
 }
 </style>

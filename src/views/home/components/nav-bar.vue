@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="nav-bar">
-      <div class="title">回家的诱惑</div>
+      <div class="title">霓裳旅途</div>
     </div>
   </div>
 </template>
