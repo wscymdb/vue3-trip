@@ -54,6 +54,8 @@ watch(
   max-width: var(--max-width);
   margin: 0 auto;
   height: 55px;
+  background-color: #fff;
+  border-top: 1px solid #f2f2f2;
 
   &_item {
     flex: 1;
@@ -62,7 +64,6 @@ watch(
     align-items: center;
     font-size: 16px;
     padding-top: 2px;
-    border-top: 1px solid #f2f2f2;
 
     i {
       font-size: 20px;

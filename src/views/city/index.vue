@@ -71,16 +71,5 @@ const { allCities } = toRefs(cityStore)
     height: calc(100vh - 86px);
     overflow: auto;
   }
-  .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
-  .loding {
-    width: 60px;
-    height: 60px;
-  }
 }
 </style>

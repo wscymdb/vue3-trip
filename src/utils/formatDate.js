@@ -11,6 +11,6 @@ export const getDiffDate = (startDate, endDate) => {
   const startStamp = new Date(startDate).getTime()
   const endStamp = new Date(endDate).getTime()
 
-  const computedStamp = endStamp - startStamp
+  const computedStamp = endStamp - startStamp - 86400000
   return new Date(computedStamp).getDate()
 }

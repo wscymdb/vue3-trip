@@ -11,6 +11,10 @@ const useCityStore = defineStore('city', {
     },
     allCities: {},
     showOverlay: true,
+    fullDate: {
+      startTime: new Date(),
+      endTime: new Date().setDate(new Date().getDate() + 1),
+    },
   }),
   actions: {
     // 获取城市信息

@@ -7,9 +7,6 @@
       <van-swipe-item>
         <img src="@/assets/images/home-navbar2.webp" alt="" />
       </van-swipe-item>
-      <van-swipe-item>
-        <img src="@/assets/images/home-navbar3.webp" alt="" />
-      </van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -18,6 +15,6 @@
 
 <style scoped lang="less">
 .van-swipe-item {
-  height: 100px;
+  height: 120px;
 }
 </style>
