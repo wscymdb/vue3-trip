@@ -11,7 +11,10 @@
       </div>
     </div>
     <!-- 日期范围 -->
-    <div class="date-range p10 bottom-gray-line" @click="showCalendar = true">
+    <div
+      class="date-range p10 bottom-gray-line"
+      @click="() => (showCalendar = true)"
+    >
       <div class="start">
         <span class="text">入住</span>
         <span>{{ startDate }}</span>
@@ -28,16 +31,7 @@
       <div class="end">人数不限</div>
     </div>
     <div class="keyword p10 bottom-gray-line">关键字/位置/民宿名</div>
-    <van-calendar
-      v-model:show="showCalendar"
-      type="range"
-      color="#ff9854"
-      :max-range="10"
-      :show-confirm="false"
-      :formatter="formatter"
-      @confirm="calendarConfirm"
-    />
-
+    <CalendarVue />
     <!-- 热门搜索建议 -->
     <div class="hot-suggests p10">
       <template v-for="(item, index) in hotSuggests" :key="index">
@@ -61,11 +55,14 @@ import { useRouter } from 'vue-router'
 import { ref, computed, reactive, toRefs } from 'vue'
 import useCityStore from '@/stores/modules/citys'
 import useHomeStore from '@/stores/modules/home'
-import { formatMonthDay, getDiffDate } from '@/utils/formatDate'
+import useMainStore from '@/stores/modules/main'
+import { formatDate, getDiffDate } from '@/utils/formatDate'
+import CalendarVue from '@/components/calendar/index.vue'
 
 const router = useRouter()
 const cityStore = useCityStore()
 const homeStore = useHomeStore()
+const mainStore = useMainStore()
 
 // 获取城市
 const getCity = () => {
@@ -88,62 +85,20 @@ const getPosition = () => {
   )
 }
 
-// ======入住时间相关===========================================================
-
 // 存放完整的时间
-const fullDate = cityStore.fullDate
+// const fullDate = mainStore.fullDate
 
-const startDate = ref(formatMonthDay(fullDate.startTime))
-const endDate = ref(formatMonthDay(fullDate.endTime))
+const { showCalendar, fullDate } = toRefs(mainStore)
 
-// calendar show
-const showCalendar = ref(false)
-// 日期确认
-const calendarConfirm = (date) => {
-  const [start, end] = date
+const startDate = computed(() => formatDate(fullDate.value.startTime))
+const endDate = computed(() => formatDate(fullDate.value.endTime))
 
-  fullDate.startTime = start
-  fullDate.endTime = end
-
-  startDate.value = formatMonthDay(start)
-  endDate.value = formatMonthDay(end)
-  // 隐藏日历
-  showCalendar.value = false
-}
 // 入住时间
 const stayTime = computed(() => {
-  const stay = getDiffDate(fullDate.startTime, fullDate.endTime)
+  const stay = getDiffDate(fullDate.value.startTime, fullDate.value.endTime)
   return `共${stay}晚`
 })
-// 更改日历文案
-const formatter = (day) => {
-  const month = day.date.getMonth() + 1
-  const date = day.date.getDate()
 
-  if (month === 11) {
-    if (date === 13) {
-      day.bottomInfo = '陈'
-    }
-    if (date === 14) {
-      day.bottomInfo = '哈'
-    }
-    if (date === 15) {
-      day.bottomInfo = '哈'
-    }
-    if (date === 16) {
-      day.bottomInfo = '真'
-    }
-    if (date === 17) {
-      day.bottomInfo = '帅'
-    }
-  }
-  if (day.type === 'start') {
-    day.bottomInfo = '入住'
-  } else if (day.type === 'end') {
-    day.bottomInfo = '离店'
-  }
-  return day
-}
 //======热门建议===========================================================
 const { hotSuggests } = toRefs(homeStore)
 

@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia'
+import { toRefs } from 'vue'
 import * as http from '@/services/modules/home'
+
+import pinia from '..'
+import useMainStore from '@/stores/modules/main'
 
 import { Notify } from 'vant'
 import 'vant/es/notify/style'
+
+const mainStore = useMainStore(pinia)
 
 export const useHomeStore = defineStore('home', {
   state: () => ({
@@ -12,7 +18,6 @@ export const useHomeStore = defineStore('home', {
     pager: {
       pageNo: 1,
     },
-    showOverlay: false,
   }),
   actions: {
     // 1.热门建议
@@ -29,15 +34,16 @@ export const useHomeStore = defineStore('home', {
     },
     // 3.house list
     async getHouseList() {
-      this.showOverlay = true
-      let params = {
-        page: this.pager.pageNo++,
+      if (!mainStore.showOverlay) {
+        let params = {
+          page: this.pager.pageNo++,
+        }
+        const { errcode, errmsg, data } = await http.getHouseList(params)
+
+        // this.pager.pageNo++
+        if (errcode !== 0) return Notify(errmsg)
+        this.houseList = this.houseList.concat(data)
       }
-      const { errcode, errmsg, data } = await http.getHouseList(params)
-      this.showOverlay = false
-      // this.pager.pageNo++
-      if (errcode !== 0) return Notify(errmsg)
-      this.houseList = this.houseList.concat(data)
     },
   },
 })

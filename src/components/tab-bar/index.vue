@@ -17,11 +17,16 @@
 </template>
 
 <script setup name="tabbar">
-import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
-import { tabBarInfo, tabBarRouterMap } from '@/assets/data/tabbar'
+import { ref, toHandlers, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import {
+  tabBarInfo,
+  tabBarRouterMap,
+  jumpByRouterMap,
+} from '@/assets/data/tabbar'
 
 const router = useRouter()
+const route = useRoute()
 
 const currentIndex = ref(0)
 
@@ -32,10 +37,22 @@ const tabBarChange = (index) => {
 console.log(import.meta.url)
 
 // 监听变化 跳转路由
+watch(currentIndex, (curr) => {
+  router.push(tabBarRouterMap.get(curr))
+})
+
+// 防止直接输入路径跳转 tabbar没有active状态
 watch(
-  currentIndex,
+  () => route.path,
   (curr) => {
-    router.push(tabBarRouterMap.get(curr))
+    // plan 1
+    const index = tabBarInfo.findIndex((item) => curr === item.path)
+    if (index === -1) return
+    currentIndex.value = index
+
+    // plan 2
+    // if (curr === '/') return
+    // currentIndex.value = jumpByRouterMap[curr]
   },
   {
     immediate: true,

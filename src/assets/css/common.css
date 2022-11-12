@@ -4,7 +4,8 @@
   --van-search-left-icon-color: var(--primary-color) !important;
   --van-field-icon-size: 18px !important;
   --van-overlay-z-index: 9999 !important;
-  --theme-linear-gradient:linear-gradient(90deg, #fa8c1d, #fcaf3f)
+  --theme-linear-gradient:linear-gradient(90deg, #fa8c1d, #fcaf3f);
+  --placeholder-gray: #999;
 }
 html {
 font-size: 14px;
@@ -17,6 +18,7 @@ font-size: 14px;
 .bottom-gray-line {
   border-bottom: 1px solid #f8f8f8;
 }
+
 
 
 /* 加载效果 */

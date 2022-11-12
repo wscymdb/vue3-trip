@@ -1,20 +1,17 @@
 <template>
   <div class="home-list">
-    <van-overlay :show="showOverlay">
-      <div class="wrapper">
-        <img class="loding" src="@/assets/images/loding.gif" alt="" />
-      </div>
-    </van-overlay>
     <h2>热门精选</h2>
     <div class="item">
       <template v-for="(item, index) in houseList" :key="index">
         <houseItemV9
           :houseInfo="item.data"
           v-if="item.discoveryContentType === 9"
+          @click="handleClick"
         />
         <houseItemV3
           :houseInfo="item.data"
           v-if="item.discoveryContentType === 3"
+          @click="handleClick"
         />
       </template>
     </div>
@@ -28,7 +25,11 @@ import houseItemV3 from '@/components/house-item-v3/index.vue'
 import { toRefs } from 'vue'
 
 const homeStore = useHomeStore()
-const { houseList, showOverlay } = toRefs(homeStore)
+const { houseList } = toRefs(homeStore)
+
+const handleClick = () => {
+  console.log('first')
+}
 </script>
 
 <style scoped lang="less">

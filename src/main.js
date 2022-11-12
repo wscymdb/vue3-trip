@@ -7,4 +7,4 @@ import pinia from './stores/index'
 import './assets/css/index.css'
 import 'normalize.css'
 
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App).use(pinia).use(router).mount('#app')
