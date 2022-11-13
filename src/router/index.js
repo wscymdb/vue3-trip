@@ -36,6 +36,13 @@ const routes = [
       hiddenTabbar: true,
     },
   },
+  {
+    path: '/detail/:id',
+    component: () => import('@/views/details/index.vue'),
+    meta: {
+      hiddenTabbar: true,
+    },
+  },
 ]
 
 const router = createRouter({

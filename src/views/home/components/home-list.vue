@@ -6,12 +6,12 @@
         <houseItemV9
           :houseInfo="item.data"
           v-if="item.discoveryContentType === 9"
-          @click="handleClick"
+          @click="handleClick(item)"
         />
         <houseItemV3
           :houseInfo="item.data"
           v-if="item.discoveryContentType === 3"
-          @click="handleClick"
+          @click="handleClick(item)"
         />
       </template>
     </div>
@@ -22,13 +22,20 @@
 import useHomeStore from '@/stores/modules/home'
 import houseItemV9 from '@/components/house-item-v9/index.vue'
 import houseItemV3 from '@/components/house-item-v3/index.vue'
+import { useRouter } from 'vue-router'
 import { toRefs } from 'vue'
 
 const homeStore = useHomeStore()
+const router = useRouter()
+
 const { houseList } = toRefs(homeStore)
 
-const handleClick = () => {
-  console.log('first')
+const handleClick = (item) => {
+  const {
+    data: { houseId },
+  } = item
+  console.log(houseId)
+  router.push(`/detail/${houseId}`)
 }
 </script>
 

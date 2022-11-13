@@ -21,7 +21,7 @@ export const useScroll = (el = window, count = 200, fn) => {
 
     const resteHeight =
       scrollHeight.value - (clientHeigt.value + scrollTop.value)
-
+    console.log(resteHeight)
     if (resteHeight <= count) {
       isReachBottom.value = true
       fn && fn()
@@ -31,11 +31,13 @@ export const useScroll = (el = window, count = 200, fn) => {
   }, 200)
 
   onMounted(() => {
+    console.log(el)
     el.addEventListener('scroll', scrollLinsterHandler)
   })
 
   onUnmounted(() => {
-    fn && el.removeEventListener('scroll', fn)
+    console.log(el)
+    fn && el.removeEventListener('scroll', scrollLinsterHandler)
   })
   return { isReachBottom, scrollHeight, scrollTop, clientHeigt }
 }

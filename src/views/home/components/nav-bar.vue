@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="nav-bar">
-      <div class="title">霓裳旅途</div>
+      <slot><div class="title">霓裳旅途</div></slot>
     </div>
   </div>
 </template>
@@ -10,10 +10,9 @@
 
 <style scoped lang="less">
 .nav-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 46px;
+  line-height: 46px;
+  text-align: center;
   border-bottom: 1px solid #f2f2f2;
   .title {
     font-size: 16px;

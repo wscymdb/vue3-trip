@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <van-overlay :show="cityStore.showOverlay">
-      <div class="wrapper">
-        <img class="loding" src="@/assets/images/loding.gif" alt="" />
-      </div>
-    </van-overlay>
     <div class="top">
       <van-search
         v-model="searchVal"

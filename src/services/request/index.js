@@ -39,7 +39,6 @@ class YMAxios {
   }
 
   async request(config) {
-    console.log(mainStore.showOverlay, '😊😊')
     try {
       const { data } = await this.instance(config)
       return data
