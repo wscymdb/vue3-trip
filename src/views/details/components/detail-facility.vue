@@ -45,6 +45,8 @@ const houseFacility = computed(() => {
 
 <style scoped lang="less">
 .facility {
+  background-color: #fff;
+  padding: 10px 0;
   .content {
     padding: 16px 10px;
     border-radius: 12px;

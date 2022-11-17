@@ -7,7 +7,9 @@
       <div class="content" v-if="commentModule">
         <div class="top">
           <div class="info">
-            <div class="score">{{ commentModule.overall }}</div>
+            <div class="score">
+              {{ (commentModule.overall + '').padEnd(3, '.0') }}
+            </div>
             <div class="desc">
               <div class="score-title">{{ commentModule.scoreTitle }}</div>
               <div class="total-count">
@@ -98,7 +100,9 @@ const commentModule = computed(() => {
 <style scoped lang="less">
 @import '@/assets/css/common.less';
 .comment {
-  margin: 20px 0;
+  background-color: #fff;
+  padding: 10px 0;
+  margin-top: 15px;
   font-size: 12px;
   .content {
     .top {

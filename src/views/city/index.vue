@@ -56,7 +56,7 @@ const { allCities } = toRefs(cityStore)
 
 <style scoped lang="less">
 .container {
-  --van-tabs-bottom-bar-color: var(--primary-color);
+  // --van-tabs-bottom-bar-color: var(--primary-color);
   --van-tabs-line-height: 32px;
   .top {
     position: relative;

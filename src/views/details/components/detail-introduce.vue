@@ -71,7 +71,9 @@ const landlordModule = computed(() => {
 
 <style scoped lang="less">
 .introduce {
-  margin: 20px 0;
+  background-color: #fff;
+  padding: 10px 0;
+  margin-top: 15px;
   font-size: 12px;
   .content {
     .top-scroll {

@@ -6,6 +6,7 @@
   --van-overlay-z-index: 9999 !important;
   --theme-linear-gradient:linear-gradient(90deg, #fa8c1d, #fcaf3f);
   --placeholder-gray: #999;
+  --van-tabs-bottom-bar-color: var(--primary-color) !important;
 }
 html {
 font-size: 14px;

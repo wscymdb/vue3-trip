@@ -7,7 +7,9 @@
 import { throttle } from 'underscore'
 import { onMounted, onUnmounted, ref } from 'vue'
 
-export const useScroll = (el = window, count = 200, fn) => {
+export const useScroll = ({ elRef, count = 200, fn }) => {
+  let el = window
+
   const isReachBottom = ref(false)
   const scrollTop = ref(0)
   const scrollHeight = ref(0)
@@ -15,13 +17,19 @@ export const useScroll = (el = window, count = 200, fn) => {
 
   // 节流
   const scrollLinsterHandler = throttle(() => {
-    clientHeigt.value = document.documentElement.clientHeight
-    scrollTop.value = document.documentElement.scrollTop
-    scrollHeight.value = document.documentElement.scrollHeight
+    clientHeigt.value = elRef
+      ? el.clientHeight
+      : document.documentElement.clientHeight
+
+    scrollTop.value = elRef ? el.scrollTop : document.documentElement.scrollTop
+
+    scrollHeight.value = elRef
+      ? el.scrollHeight
+      : document.documentElement.scrollHeight
 
     const resteHeight =
       scrollHeight.value - (clientHeigt.value + scrollTop.value)
-    console.log(resteHeight)
+
     if (resteHeight <= count) {
       isReachBottom.value = true
       fn && fn()
@@ -31,12 +39,11 @@ export const useScroll = (el = window, count = 200, fn) => {
   }, 200)
 
   onMounted(() => {
-    console.log(el)
+    el = elRef ? elRef.value : window
     el.addEventListener('scroll', scrollLinsterHandler)
   })
 
   onUnmounted(() => {
-    console.log(el)
     fn && el.removeEventListener('scroll', scrollLinsterHandler)
   })
   return { isReachBottom, scrollHeight, scrollTop, clientHeigt }

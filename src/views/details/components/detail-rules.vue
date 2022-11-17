@@ -73,10 +73,13 @@ const rulesModule = computed(() => {
 
 <style scoped lang="less">
 .rules {
+  background-color: #fff;
+  margin-top: 15px;
   font-size: 12px;
   padding: 10px;
-  color: #666;
   .content {
+    color: #666;
+
     .orderRules {
       .item {
         margin: 20px 0;

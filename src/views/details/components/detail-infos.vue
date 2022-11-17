@@ -53,8 +53,10 @@ const topModule = computed(() => {
 
 <style scoped lang="less">
 .infos {
+  background-color: #fff;
   font-size: 12px;
   padding: 10px;
+  margin-bottom: 15px;
   .name {
     font-size: 18px;
     font-weight: 700;
