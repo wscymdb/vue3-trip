@@ -12,7 +12,12 @@ const route = useRoute()
 
 <template>
   <div class="container">
-    <routerView></routerView>
+    <routerView v-slot="props">
+      <keep-alive include="home">
+        <component :is="props.Component"></component>
+      </keep-alive>
+    </routerView>
+
     <TabBar v-if="!route.meta.hiddenTabbar" />
     <van-overlay :show="showOverlay">
       <div class="wrapper">

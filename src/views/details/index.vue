@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="tabs" v-if="showTabs">
-      <van-tabs @click-tab="onClickTab">
+      <van-tabs @click-tab="onClickTab" v-model:active="activeName">
         <van-tab v-for="item in tabs" :title="item"> </van-tab>
       </van-tabs>
     </div>
@@ -48,7 +48,7 @@
 
 <script setup name="detalis">
 import { useRouter, useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 import NavBarVue from '../home/components/nav-bar.vue'
 import DetailBaanerVue from './components/detail-baaner.vue'
@@ -61,7 +61,6 @@ import DetailRulesVue from './components/detail-rules.vue'
 import DetailMapVue from './components/detail-map.vue'
 import DetailPriceIntroVue from './components/detail-price-intro.vue'
 import { useScroll } from '@/hooks/useScroll'
-import { computed } from '@vue/reactivity'
 const router = useRouter()
 const route = useRoute()
 const detailStore = useDetailStore()
@@ -91,13 +90,51 @@ const getSectionRef = (val) => {
   sectionEls.value[name] = val.$el
 }
 
+let isClick = false
+let distance = -1
+
 // 点击tab跳转对应的区域
 const onClickTab = (tab) => {
+  isClick = true
+
+  distance = sectionEls.value[tab.title].offsetTop - 59
   window.scrollTo({
-    top: sectionEls.value[tab.title].offsetTop - 59, // 59是tabs的高度
+    top: distance, // 59是tabs的高度
     behavior: 'smooth',
   })
 }
+let aliveValues = []
+// 当滑动到某个位置，顶部的tabs显示对应的位置
+const activeName = ref(0)
+
+watch(scrollTop, (curr) => {
+  // 当滚动的距离和点击的距离一样的化 让isClick变为false
+  if (distance === curr) {
+    isClick = false
+  }
+  // 如果是点击触发的就return
+  if (isClick) return
+
+  let sTop = scrollTop.value + 59
+  let values = Object.values(sectionEls.value)
+
+  // 做个小的缓存
+  if (!aliveValues.length) {
+    aliveValues = values.map((item) => item.offsetTop)
+  }
+
+  values = aliveValues
+
+  let index = values.length - 1
+  for (let i = 0; i < values.length; i++) {
+    let value = values[i]
+    if (value > sTop) {
+      index = i - 1
+      break
+    }
+  }
+  activeName.value = index
+})
 </script>
 
 <style scoped lang="less">

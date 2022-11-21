@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" ref="homeRef">
     <NavBarVue />
     <HomeBannerVue />
     <HomeSearchBoxVue />
@@ -10,7 +10,7 @@
 </template>
 
 <script setup name="home">
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onActivated } from 'vue'
 import NavBarVue from './components/nav-bar.vue'
 import HomeBannerVue from './components/home-banner.vue'
 import HomeSearchBoxVue from './components/home-search-box.vue'
@@ -31,17 +31,37 @@ async function fetch() {
 }
 fetch()
 
-const { scrollTop } = useScroll(window, 200, () => {
-  homeStore.getHouseList()
+const homeRef = ref(null)
+const { scrollTop } = useScroll({
+  elRef: homeRef,
+  count: 200,
+  fn: () => {
+    homeStore.getHouseList()
+  },
 })
 
 const isShowSearchBar = computed(() => {
   return scrollTop.value > 350
 })
+
+// 跳转回来时，保留原来的位置
+onActivated(() => {
+  console.log(scrollTop)
+  homeRef.value.scrollTo({
+    top: scrollTop.value,
+  })
+})
+</script>
+
+<script>
+export default {
+  name: 'home',
+}
 </script>
 
 <style scoped lang="less">
 .home {
+  height: 100vh;
   padding-bottom: 67px;
   background-color: #f5f5f5;
   overflow: auto;
